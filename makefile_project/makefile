@@ -31,4 +31,4 @@ clean:
 	del Debug
 
 upload:
-	@ST-LINK_CLI -c SWD FREQ=4000 UR -P Debug\final.bin 0x08000000 -V after_programming
+	@ST-LINK_CLI -c SWD FREQ=4000 UR -P Debug\final.bin 0x08000000 -V after_programming -Rst

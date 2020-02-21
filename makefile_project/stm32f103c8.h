@@ -193,6 +193,7 @@ typedef struct{ //DMA_TypeDef
   DMA_Channel_TypeDef channel[7];
 } DMA_TypeDef;
 
+//XXX TODO change 32 bit defenition of 16 bit register (PSC and ARR) to 16 bits, so that compiler will generate errors on numbers which are to big.
 typedef struct{ //TIM_TypeDef
   IO uint32_t CR1;
   IO uint32_t CR2;
@@ -1365,6 +1366,10 @@ typedef struct{ //DBGMCU_TypeDef
 #define DMA_CCR_PL                               (0x3U << 12U)                 /*PL[1:0] bits(Channel Priority level)*/
 #define DMA_CCR_PL_0                             (0x1U << 12U)
 #define DMA_CCR_PL_1                             (0x2U << 12U)
+#define DMA_CCR_PL_LOW                           (0x0U << 12U)                 /*Low priority*/
+#define DMA_CCR_PL_MEDIUM                        (0x1U << 12U)                 /*Medium priority*/
+#define DMA_CCR_PL_HIGH                          (0x2U << 12U)                 /*High priority*/
+#define DMA_CCR_PL_VERY_HIGH                     (0x3U << 12U)                 /*Very high priority*/
 #define DMA_CCR_MEM2MEM                          (0x1U << 14U)                 /*Memory to memory mode*/
 
 #define DMA_CNDTR_NDT                            (0xFFFFU << 0U)               /*Number of data to Transfer*/

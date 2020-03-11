@@ -15,9 +15,10 @@ TARGET_PATH = Debug\final.o
 		@$(AS) $< -o Debug\$@ $(ASFLAGS)
 		@echo compiling $<
 
-all: main.o c_runtime.o vector_table.o
+all: main.o c_runtime.o vector_table.o printf.o
 		@echo linking
-		@arm-none-eabi-ld Debug\main.o Debug\c_runtime.o Debug\vector_table.o -T STM32F103C8_linker.ld -o Debug\final.o
+#		@arm-none-eabi-ld Debug\main.o Debug\c_runtime.o Debug\vector_table.o Debug\printf.o -T STM32F103C8_linker.ld -o Debug\final.o
+		@arm-none-eabi-gcc -nostartfiles Debug\main.o Debug\c_runtime.o Debug\vector_table.o Debug\printf.o -T STM32F103C8_linker.ld -o Debug\final.o
 		@echo converting to binary and dissassembling
 		@arm-none-eabi-objcopy -O binary Debug\final.o Debug\final.bin
 #		arm-none-eabi-objdump Debug\final.bin -marm -D -bbinary -Mforce-thumb

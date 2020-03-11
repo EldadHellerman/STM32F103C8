@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+//lacks registers define by ARMv7-M Architecture
+
 typedef struct{ //MPU_TypeDef
   uint32_t TYPER;
   uint32_t CR;
@@ -177,6 +179,21 @@ typedef struct{ //STK_TypeDef
 #define MPU_RASR_C                               (0X1U << 17U)
 #define MPU_RASR_S                               (0X1U << 18U)
 #define MPU_RASR_XN                              (0X1U << 28U)
+
+
+#define __enable_irq()                           __asm__("CPSIE I\n\r");
+#define __disable_irq()                          __asm__("CPSID I\n\r");
+#define __enable_fault_irq()                     __asm__("CPSIE F\n\r");
+#define __disable_fault_irq()                    __asm__("CPSID F\n\r");
+#define __ISB()                                  __asm__("ISB\n\r");
+#define __DSB()                                  __asm__("DSB\n\r");
+#define __DMB()                                  __asm__("DMB\n\r");
+//rev
+//rev16
+//revsh
+//#define __SEV()                                  __asm__("SEV\n\r");
+//#define __WFE()                                  __asm__("WFE\n\r");
+#define __WFI()                                  __asm__("WFI\n\r");
 
 
 #endif

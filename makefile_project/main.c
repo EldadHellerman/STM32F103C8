@@ -1,5 +1,6 @@
 #include "stm32f103c8.h"
 #include <stdint.h>
+#include "printf.h"
 //#include "main.h"
 
 
@@ -7,15 +8,47 @@ int main(void);
 volatile char led = 0;
 const char string[] = "hello, this is a string which the DMA shold copy to a different location in memory";
 
+
+
+#define TPIU_DEVID		(*(uint32_t *)(0xE0040FC8))
+
+#define DEM_CR				(*(uint32_t *)(0xE000EDFC))
+#define ITM_LOCK			(*(uint32_t *)(0xE0000FB0))
+#define ITM_TCR				(*(uint32_t *)(0xE0000E80))
+#define ITM_TPR				(*(uint32_t *)(0xE0000E40))
+#define ITM_TER				(*(uint32_t *)(0xE0000E00))
+
+#define ITM_PORT0			(*(volatile uint32_t *)(0xE0000000))
+#define ITM_PORT0_8		(*(volatile uint8_t *)(0xE0000000))
+
+
+void enable_ITM(void){
+	DEM_CR = 1<<24; //TRCENA   - DEMCR -> 0xE000EDFC
+	DBGMCU->CR = DBGMCU_CR_TRACE_IOEN;
+	ITM_LOCK = 0xC5ACCE55; //unlock write access
+	ITM_TCR = 0x00010005; //trace and control register
+	ITM_TER = 1;
+	ITM_TPR = 1;
+}
+
+void _putchar(char c){
+	while(ITM_PORT0 == 0);
+	ITM_PORT0_8 = c;
+}
+
+void print(char *s){
+	while(*s != 0){
+		while(ITM_PORT0 == 0);
+		ITM_PORT0_8 = *s++;
+	}
+}
+
 void _IRQ27_TIM2(void){
 	TIM2->SR &= ~1; //clear interrupt flag
-	if(led == 0){
-		led = 1;
-		GPIOC->ODR &= ~(1<<13); //led on
-	}else{
-		led = 0;
-		GPIOC->ODR |= 1<<13; //led off
-	}
+	led = !led;
+	if(led) GPIOC->ODR &= ~(1<<13); //led on
+	else GPIOC->ODR |= 1<<13; //led off
+	//printf("LED turned %s\n",(led==1) ? "On" : "Off");
 }
 
 volatile int i=0;
@@ -35,7 +68,7 @@ void init_clock(void){
 
 	RCC->APB1ENR = RCC_APB1ENR_TIM2EN;
 	RCC->APB2ENR = RCC_APB2ENR_IOPCEN;
-	RCC->AHBENR = RCC_AHBENR_DMA1EN;
+	RCC->AHBENR = RCC_AHBENR_DMA1EN | RCC_AHBENR_CRCEN;
 }
 
 void init_tim2(void){
@@ -68,19 +101,38 @@ int stk_stop(void){ //return amount of us since started
 	return((0xffffff - STK->VAL)/9);
 }
 
+int crc_32(int input){
+	CRC->CR = CRC_CR_RESET;
+	__DSB(); //reset should occur before data is written
+	CRC->DR = input;
+	return(CRC->DR);
+}
+
 int main(void){
 	init_clock();
-	init_tim2();
+	enable_ITM();
+	__enable_irq(); //enabled by defualt
+
+	/*
 	dma_init();
-
-
 	stk_start();
 	dma_start(); while(!(DMA->ISR & ~DMA_ISR_TCIF1));
-	*(int *)(0x20000050) = stk_stop(); 
+	printf("DMA took %d cycles\n", stk_stop());
+	printf("org: '%s'\ndst:'%s'\n", string, (char *)(SRAM_BASE + 0x100));
+	int r[3];
+	r[0] = crc_32(0x12345678); //0xDF8A8A2B
+	r[1] = crc_32(0x87654321); //0x99AB297E
+	r[2] = crc_32(0xe1dad2e1); //0xBEF7B175
+	printf("results are: r1-0x%X, r2-0x%X, r3-0x%X\n", r[0], r[1], r[2]);
 
-	GPIOC->CRH = ((uint32_t)(0b0010)) << ((13-8)*4); //set pin 13 to push-pull at high speed (50MHz)
+	//printf("started, number %d, 0X%p\n",123,0x4567e1d);
+	//printf("buffer size: 2^%d\n", (TPIU_DEVID>>6) & 7);
+	*/
+
+	GPIOC->CRH = GPIO_CRH_MODE13_1; //pin 13 output @ 2MHz
 	GPIOC->ODR |= 1<<13; //led off
-	TIM2->CR1 |= 1; //CK_INT - write 1 to CEN to enable internal clock
-
+	init_tim2();
+	TIM2->CR1 |= TIM_CR1_CEN;
 	while(1);
+	//while(1) __WFI(); //doesnt work when debugging
 }

@@ -819,12 +819,12 @@ typedef struct{ //DBGMCU_TypeDef
 #define GPIO_ODR_ODR7                            (0x1U << 7U)                  /*Port output data, bit 7*/
 #define GPIO_ODR_ODR8                            (0x1U << 8U)                  /*Port output data, bit 8*/
 #define GPIO_ODR_ODR9                            (0x1U << 9U)                  /*Port output data, bit 9*/
-#define GPIO_ODR_ODR10                           (0x1U << 10U)                          /*!Port output data, bit 10*/
-#define GPIO_ODR_ODR11                           (0x1U << 11U)                          /*!Port output data, bit 11*/
-#define GPIO_ODR_ODR12                           (0x1U << 12U)                          /*!Port output data, bit 12*/
-#define GPIO_ODR_ODR13                           (0x1U << 13U)                          /*!Port output data, bit 13*/
-#define GPIO_ODR_ODR14                           (0x1U << 14U)                          /*!Port output data, bit 14*/
-#define GPIO_ODR_ODR15                           (0x1U << 15U)                          /*!Port output data, bit 15*/
+#define GPIO_ODR_ODR10                           (0x1U << 10U)                 /*Port output data, bit 10*/
+#define GPIO_ODR_ODR11                           (0x1U << 11U)                 /*Port output data, bit 11*/
+#define GPIO_ODR_ODR12                           (0x1U << 12U)                 /*Port output data, bit 12*/
+#define GPIO_ODR_ODR13                           (0x1U << 13U)                 /*Port output data, bit 13*/
+#define GPIO_ODR_ODR14                           (0x1U << 14U)                 /*Port output data, bit 14*/
+#define GPIO_ODR_ODR15                           (0x1U << 15U)                 /*Port output data, bit 15*/
 
 #define GPIO_BSRR_BS0                            (0x1U << 0U)                  /*Port x Set bit 0*/
 #define GPIO_BSRR_BS1                            (0x1U << 1U)                  /*Port x Set bit 1*/
@@ -1751,9 +1751,9 @@ typedef struct{ //DBGMCU_TypeDef
 #define TIM_CCMR1_CC1S                           (0x3U << 0U)                  /*CC1S[1:0] bits (Capture/Compare 1 Selection)*/
 #define TIM_CCMR1_CC1S_0                         (0x1U << 0U)
 #define TIM_CCMR1_CC1S_1                         (0x2U << 0U)
-#define TIM_CCMR1_OC1FE                          (0x1U << 2U)                           /*!<Output Compare 1 Fast enable*/
-#define TIM_CCMR1_OC1PE                          (0x1U << 3U)                           /*!<Output Compare 1 Preload enable*/
-#define TIM_CCMR1_OC1M                           (0x7U << 4U)                           /*!<OC1M[2:0] bits (Output Compare 1 Mode)*/
+#define TIM_CCMR1_OC1FE                          (0x1U << 2U)                  /*Output Compare 1 Fast enable*/
+#define TIM_CCMR1_OC1PE                          (0x1U << 3U)                  /*Output Compare 1 Preload enable*/
+#define TIM_CCMR1_OC1M                           (0x7U << 4U)                  /*OC1M[2:0] bits (Output Compare 1 Mode)*/
 #define TIM_CCMR1_OC1M_0                         (0x1U << 4U)
 #define TIM_CCMR1_OC1M_1                         (0x2U << 4U)
 #define TIM_CCMR1_OC1M_2                         (0x4U << 4U)

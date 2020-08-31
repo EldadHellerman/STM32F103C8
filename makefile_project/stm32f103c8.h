@@ -370,11 +370,17 @@ typedef struct{ //DBGMCU_TypeDef
 #define APB2_PERIPH_BASE                         (PERIPH_BASE + 0x00010000U)
 #define AHB_PERIPH_BASE                          (PERIPH_BASE + 0x00020000U)
 
-#define SRAM_BB_BASE                             0x22000000U
-#define PERIPH_BB_BASE                           0x42000000U
-#define BIT_BAND_SRAM(WORD_ADDRESS, BIT)         (*(uint32_t *)(SRAM_BB_BASE + ))
-#define BIT_BAND_PERIPH(WORD_ADDRESS, BIT)       (*(uint32_t *)(PERIPH_BB_BASE + ))
+#define BIT_BAND_SRAM(BYTE_ADDRESS, BIT)          (*(uint32_t *)((((uint32_t)((BYTE_ADDRESS) - 0x20000000U))<<5U) + (BIT<<2) + 0x22000000U))
+#define BIT_BAND_PERIPH(BYTE_ADDRESS, BIT)       (*(uint32_t *)((((uint32_t)((BYTE_ADDRESS) - 0x40000000U))<<5U) + (BIT<<2) + 0x42000000U))
+
 #warning unfinished code, for translating bit-banding area
+#define SET_BIT_SRAM(VAR, BIT)                   BIT_BAND_SRAM((&VAR), BIT) = 1
+#define CLEAR_BIT_SRAM(VAR, BIT)                 BIT_BAND_SRAM((&VAR), BIT) = 0
+#define SET_BIT_PERIPH(VAR, BIT)                 BIT_BAND_PERIPH((&VAR), BIT) = 1
+#define CLEAR_BIT_PERIPH(VAR, BIT)               BIT_BAND_PERIPH((&VAR), BIT) = 0
+//#define BIT_BAND(BYTE_ADDRES, BIT)              (*(uint32_t *)(((uint32_t)((BYTE_ADDRES) - ((((BYTE_ADDRES) > 0x20000000U) && ((BYTE_ADDRES) < 0x22000000U)) ?  \
+                                                    0x20000000U : ((((BYTE_ADDRES) > 0x40000000U) && ((BYTE_ADDRES) < 0x42000000U)) ?  0x40000000U : -1))))<<5U + (BIT<<2) + ((((BYTE_ADDRES) > 0x20000000U) \
+                                                    && ((BYTE_ADDRES) < 0x22000000U)) ?  0x22000000U : ((((BYTE_ADDRES) > 0x40000000U) && ((BYTE_ADDRES) < 0x42000000U)) ?  0x42000000U : -1))))
 
 #define TIM2_BASE                                (APB1_PERIPH_BASE + 0x00000000U)
 #define TIM3_BASE                                (APB1_PERIPH_BASE + 0x00000400U)
@@ -1380,8 +1386,8 @@ typedef struct{ //DBGMCU_TypeDef
 
 
 #define ADC_SR_AWD                               (0x1U << 0U)                  /*ADC analog watchdog 1 flag*/
-#define ADC_SR_EOS                               (0x1U << 1U)                  /*ADC group regular end of sequence conversions flag*/
-#define ADC_SR_JEOS                              (0x1U << 2U)                  /*ADC group injected end of sequence conversions flag*/
+#define ADC_SR_EOC                               (0x1U << 1U)                  /*ADC group regular end of conversion flag*/
+#define ADC_SR_JEOC                              (0x1U << 2U)                  /*ADC group injected end of conversion flag*/
 #define ADC_SR_JSTRT                             (0x1U << 3U)                  /*ADC group injected conversion start flag*/
 #define ADC_SR_STRT                              (0x1U << 4U)                  /*ADC group regular conversion start flag*/
 
@@ -1391,9 +1397,9 @@ typedef struct{ //DBGMCU_TypeDef
 #define ADC_CR1_AWDCH_2                          (0x04U << 0U)
 #define ADC_CR1_AWDCH_3                          (0x08U << 0U)
 #define ADC_CR1_AWDCH_4                          (0x10U << 0U)
-#define ADC_CR1_EOSIE                            (0x1U << 5U)                  /*ADC group regular end of sequence conversions interrupt*/
+#define ADC_CR1_EOCIE                            (0x1U << 5U)                  /*ADC end of conversion interrupt*/
 #define ADC_CR1_AWDIE                            (0x1U << 6U)                  /*ADC analog watchdog 1 interrupt*/
-#define ADC_CR1_JEOSIE                           (0x1U << 7U)                  /*ADC group injected end of sequence conversions interrupt*/
+#define ADC_CR1_JEOCIE                           (0x1U << 7U)                  /*ADC group injected end of conversion interrupt*/
 #define ADC_CR1_SCAN                             (0x1U << 8U)                  /*ADC scan mode*/
 #define ADC_CR1_AWDSGL                           (0x1U << 9U)                  /*ADC analog watchdog 1 monitoring a single channel or all channels*/
 #define ADC_CR1_JAUTO                            (0x1U << 10U)                 /*ADC group injected automatic trigger mode*/

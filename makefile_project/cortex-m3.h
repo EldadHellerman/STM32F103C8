@@ -4,6 +4,20 @@
 #include <stdint.h>
 
 //lacks registers define by ARMv7-M Architecture
+/*
+#define PPBI_BASE                                0xE0000000U
+#define PPBE_BASE                                0xE0040000U
+
+#define ITM_BASE                                 (PPBI_BASE + 0x00000000U)
+#define DWT_BASE                                 (PPBI_BASE + 0x00001000U)
+#define FPB_BASE                                 (PPBI_BASE + 0x00002000U)
+#define SCS_BASE                                 (PPBI_BASE + 0x0000E000U)
+
+#define TPIU_BASE                                (PPBE_BASE + 0x00000000U)
+#define ETM_BASE                                 (PPBE_BASE + 0x00001000U)
+#define EPPB_BASE                                (PPBE_BASE + 0x00002000U)
+#define ROMT_BASE                                (PPBE_BASE + 0x000BF000U)
+*/
 
 typedef struct{ //MPU_TypeDef
   uint32_t TYPER;
@@ -14,6 +28,7 @@ typedef struct{ //MPU_TypeDef
 }MPU_TypeDef;
 
 typedef struct{ //NVIC_TypeDef
+  //TODO add ICTR to this struct, or turn everything to arrays contained in a c99 struct.
   uint32_t ISER0;
   uint32_t ISER1;
   uint32_t ISER2;
@@ -34,7 +49,7 @@ typedef struct{ //NVIC_TypeDef
   uint32_t IABR1;
   uint32_t IABR2;
   uint32_t RESERVED_4[244];
-  //this can be an array of IP[80] length
+  //TODO this can be an array of IP[80] length
   uint32_t IPR0;
   uint32_t IPR1;
   uint32_t IPR2;
@@ -56,8 +71,6 @@ typedef struct{ //NVIC_TypeDef
   uint32_t IPR18;
   uint32_t IPR19;
   uint32_t IPR20;
-  uint32_t RESERVED_5[2732];
-  uint32_t STIR;
 }NVIC_TypeDef;
 
 typedef struct{ //SCB_TypeDef
@@ -70,11 +83,30 @@ typedef struct{ //SCB_TypeDef
   uint32_t SHPR1;
   uint32_t SHPR2;
   uint32_t SHPR3;
-  uint32_t SHCRS;
+  uint32_t SHCSR;
   uint32_t CFSR;
   uint32_t HFSR;
-  uint32_t MMAR;
+  uint32_t DFSR;
+  uint32_t MMFAR;
   uint32_t BFAR;
+  uint32_t AFSR;
+  uint32_t ID_PFR0;
+  uint32_t ID_PFR1;
+  uint32_t ID_DFR0;
+  uint32_t ID_AFR0;
+  uint32_t ID_MMFR0;
+  uint32_t ID_MMFR1;
+  uint32_t ID_MMFR2;
+  uint32_t ID_MMFR3;
+  uint32_t ID_ISAR0;
+  uint32_t ID_ISAR1;
+  uint32_t ID_ISAR2;
+  uint32_t ID_ISAR3;
+  uint32_t ID_ISAR4;
+  uint32_t RESERVED_0[5];
+  uint32_t CPACR;
+  uint32_t RESERVED_1[93];
+  uint32_t STIR;
 }SCB_TypeDef;
 
 typedef struct{ //STK_TypeDef
@@ -84,6 +116,7 @@ typedef struct{ //STK_TypeDef
   uint32_t CALIB;
 }STK_TypeDef;
 
+//ICTR - 0xE000E004
 
 #define CORE_PERIPH_BASE                         0xE0000000U
 
@@ -194,6 +227,7 @@ typedef struct{ //STK_TypeDef
 //#define __SEV()                                  __asm__("SEV\n\r");
 //#define __WFE()                                  __asm__("WFE\n\r");
 #define __WFI()                                  __asm__("WFI\n\r");
+#define __NOP()                                  __asm__("NOP\n\r");
 
 
 #endif

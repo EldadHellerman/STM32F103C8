@@ -62,7 +62,6 @@ typedef enum{ //IRQn_Type
   RTC_Alarm_IRQn              = 41,     //RTC Alarm through EXTI Line Interrupt
   USBWakeUp_IRQn              = 42,     //USB Device WakeUp from suspend through EXTI Line Interrupt
 } IRQn_Type;
-
 typedef struct{ //FLASH_TypeDef
   IO uint32_t ACR;
   IO uint32_t KEYR;
@@ -74,7 +73,6 @@ typedef struct{ //FLASH_TypeDef
   IO uint32_t OBR;
   IO uint32_t WRPR;
 } FLASH_TypeDef;
-
 typedef struct{ //OB_TypeDef
   uint16_t RDP;
   uint16_t USER;
@@ -85,7 +83,6 @@ typedef struct{ //OB_TypeDef
   uint16_t WRP2;
   uint16_t WRP3;
 } OB_TypeDef;
-
 typedef struct{ //CRC_TypeDef
   IO uint32_t DR;
   uint8_t  IDR;
@@ -93,12 +90,10 @@ typedef struct{ //CRC_TypeDef
   uint16_t RESERVED_1;
   IO uint32_t CR;
 } CRC_TypeDef;
-
 typedef struct{ //PWR_TypeDef
   IO uint32_t CR;
   IO uint32_t CSR;
 } PWR_TypeDef;
-
 typedef struct{ //BKP_TypeDef
   IO uint32_t RESERVED;
   IO uint32_t DR1;
@@ -115,7 +110,6 @@ typedef struct{ //BKP_TypeDef
   IO uint32_t CR;
   IO uint32_t CSR;
 } BKP_TypeDef;
-
 typedef struct{ //RCC_TypeDef
   IO uint32_t CR;
   IO uint32_t CFGR;
@@ -128,7 +122,6 @@ typedef struct{ //RCC_TypeDef
   IO uint32_t BDCR;
   IO uint32_t CSR;
 } RCC_TypeDef;
-
 typedef struct{ //GPIO_TypeDef
   IO uint32_t CRL;
   IO uint32_t CRH;
@@ -138,7 +131,6 @@ typedef struct{ //GPIO_TypeDef
   IO uint32_t BRR;
   IO uint32_t LCKR;
 } GPIO_TypeDef;
-
 typedef struct{ //AFIO_TypeDef
   IO uint32_t EVCR;
   IO uint32_t MAPR;
@@ -146,7 +138,6 @@ typedef struct{ //AFIO_TypeDef
   IO uint32_t RESERVED;
   IO uint32_t MAPR2;
 } AFIO_TypeDef;
-
 typedef struct{ //EXTI_TypeDef
   IO uint32_t IMR;
   IO uint32_t EMR;
@@ -155,7 +146,6 @@ typedef struct{ //EXTI_TypeDef
   IO uint32_t SWIER;
   IO uint32_t PR;
 } EXTI_TypeDef;
-
 typedef struct{ //ADC_TypeDef
   IO uint32_t SR;
   IO uint32_t CR1;
@@ -178,7 +168,6 @@ typedef struct{ //ADC_TypeDef
   IO uint32_t JDR4;
   IO uint32_t DR;
 } ADC_TypeDef;
-
 typedef struct{ //DMA_Channel_TypeDef
   IO uint32_t CCR;
   IO uint32_t CNDTR;
@@ -186,13 +175,11 @@ typedef struct{ //DMA_Channel_TypeDef
   IO uint32_t CMAR;
   IO uint32_t RESERVED;
 } DMA_Channel_TypeDef;
-
 typedef struct{ //DMA_TypeDef
   IO uint32_t ISR;
   IO uint32_t IFCR;
   DMA_Channel_TypeDef channel[7];
 } DMA_TypeDef;
-
 //XXX TODO change 32 bit defenition of 16 bit register (PSC and ARR) to 16 bits, so that compiler will generate errors on numbers which are to big.
 typedef struct{ //TIM_TypeDef
   IO uint32_t CR1;
@@ -216,7 +203,6 @@ typedef struct{ //TIM_TypeDef
   IO uint32_t DCR;
   IO uint32_t DMAR;
 }TIM_TypeDef;
-
 typedef struct{ //RTC_TypeDef
   IO uint32_t CRH;
   IO uint32_t CRL;
@@ -229,73 +215,80 @@ typedef struct{ //RTC_TypeDef
   IO uint32_t ALRH;
   IO uint32_t ALRL;
 } RTC_TypeDef;
-
 typedef struct{ //IWDG_TypeDef
   IO uint32_t KR;
   IO uint32_t PR;
   IO uint32_t RLR;
   IO uint32_t SR;
 } IWDG_TypeDef;
-
 typedef struct{ //WWDG_TypeDef
   IO uint32_t CR;
   IO uint32_t CFR;
   IO uint32_t SR;
 } WWDG_TypeDef;
-
 typedef struct{ //USB_TypeDef
-  uint16_t EP0R;
-  uint16_t RESERVED_0;
-  uint16_t EP1R;
-  uint16_t RESERVED_1;
-  uint16_t EP2R;
-  uint16_t RESERVED_2;
-  uint16_t EP3R;
-  uint16_t RESERVED_3;
-  uint16_t EP4R;
-  uint16_t RESERVED_4;
-  uint16_t EP5R;
-  uint16_t RESERVED_5;
-  uint16_t EP6R;
-  uint16_t RESERVED_6;
-  uint16_t EP7R;
-  uint16_t RESERVED_7[17];
-  uint16_t CNTR;
-  uint16_t RESERVED_8;
-  uint16_t ISTR;
-  uint16_t RESERVED_9;
-  uint16_t FNR;
-  uint16_t RESERVED_10;
-  uint16_t DADDR;
-  uint16_t RESERVED_11;
-  uint16_t BTABLE;
-  uint16_t RESERVED_12;
+  /*IO struct{
+    IO uint16_t data;
+    IO uint16_t RESERVED_0;
+  }EPR[8]*/
+  IO uint16_t EP0R;
+  IO uint16_t RESERVED_0;
+  IO uint16_t EP1R;
+  IO uint16_t RESERVED_1;
+  IO uint16_t EP2R;
+  IO uint16_t RESERVED_2;
+  IO uint16_t EP3R;
+  IO uint16_t RESERVED_3;
+  IO uint16_t EP4R;
+  IO uint16_t RESERVED_4;
+  IO uint16_t EP5R;
+  IO uint16_t RESERVED_5;
+  IO uint16_t EP6R;
+  IO uint16_t RESERVED_6;
+  IO uint16_t EP7R;
+  IO uint16_t RESERVED_7[17];
+  IO uint16_t CNTR;
+  IO uint16_t RESERVED_8;
+  IO uint16_t ISTR;
+  IO uint16_t RESERVED_9;
+  IO uint16_t FNR;
+  IO uint16_t RESERVED_10;
+  IO uint16_t DADDR;
+  IO uint16_t RESERVED_11;
+  IO uint16_t BTABLE;
+  IO uint16_t RESERVED_12;
 } USB_TypeDef;
-
-typedef union{ //USBSRAM_TyepDef
-  uint16_t buffer16[256];
-  uint8_t buffer[512];
-}USBSRAM_TyepDef;
-
+typedef struct{ //USBSRAM_TypeDef
+  IO uint32_t buffer[256];
+}USB_SRAM_TypeDef;
+typedef struct{ //USB_BTABLE_TypeDef
+  struct{
+    IO uint16_t tx_address;
+    IO uint16_t RESERVED0;
+    IO uint16_t tx_count;
+    IO uint16_t RESERVED1;
+    IO uint16_t rx_address;
+    IO uint16_t RESERVED2;
+    IO uint16_t rx_count;
+    IO uint16_t RESERVED3;
+  } ep[8];
+}USB_BTABLE_TypeDef;
 typedef struct{ //CAN_TxMailBox_TypeDef
   IO uint32_t TIR;
   IO uint32_t TDTR;
   IO uint32_t TDLR;
   IO uint32_t TDHR;
 } CAN_TxMailBox_TypeDef;
-
 typedef struct{ //CAN_FIFOMailBox_TypeDef
   IO uint32_t RIR;
   IO uint32_t RDTR;
   IO uint32_t RDLR;
   IO uint32_t RDHR;
 } CAN_FIFOMailBox_TypeDef;
-
 typedef struct{ //CAN_FilterRegister_TypeDef
   IO uint32_t FR1;
   IO uint32_t FR2;
 } CAN_FilterRegister_TypeDef;
-
 typedef struct{ //CAN_TypeDef
   IO uint32_t MCR;
   IO uint32_t MSR;
@@ -320,7 +313,6 @@ typedef struct{ //CAN_TypeDef
   IO uint32_t  RESERVED_5[8];
   CAN_FilterRegister_TypeDef sFilterRegister[14];
 } CAN_TypeDef;
-
 typedef struct{ //SPI_TypeDef
   IO uint32_t CR1;
   IO uint32_t CR2;
@@ -330,7 +322,6 @@ typedef struct{ //SPI_TypeDef
   IO uint32_t RXCRCR;
   IO uint32_t TXCRCR;
 } SPI_TypeDef;
-
 typedef struct{ //I2C_TypeDef
   IO uint32_t CR1;
   IO uint32_t CR2;
@@ -342,7 +333,6 @@ typedef struct{ //I2C_TypeDef
   IO uint32_t CCR;
   IO uint32_t TRISE;
 } I2C_TypeDef;
-
 typedef struct{ //USART_TypeDef
   IO uint32_t SR;
   IO uint32_t DR;
@@ -352,11 +342,9 @@ typedef struct{ //USART_TypeDef
   IO uint32_t CR3;
   IO uint32_t GTPR;
 } USART_TypeDef;
-
 typedef struct{ //UID_TypeDef
   IO uint32_t UID[3];
 }UID_TypeDef;
-
 typedef struct{ //DBGMCU_TypeDef
   IO uint32_t IDCODE;
   IO uint32_t CR;
@@ -378,9 +366,9 @@ typedef struct{ //DBGMCU_TypeDef
 #define CLEAR_BIT_SRAM(VAR, BIT)                 BIT_BAND_SRAM((&VAR), BIT) = 0
 #define SET_BIT_PERIPH(VAR, BIT)                 BIT_BAND_PERIPH((&VAR), BIT) = 1
 #define CLEAR_BIT_PERIPH(VAR, BIT)               BIT_BAND_PERIPH((&VAR), BIT) = 0
-//#define BIT_BAND(BYTE_ADDRES, BIT)              (*(uint32_t *)(((uint32_t)((BYTE_ADDRES) - ((((BYTE_ADDRES) > 0x20000000U) && ((BYTE_ADDRES) < 0x22000000U)) ?  \
-                                                    0x20000000U : ((((BYTE_ADDRES) > 0x40000000U) && ((BYTE_ADDRES) < 0x42000000U)) ?  0x40000000U : -1))))<<5U + (BIT<<2) + ((((BYTE_ADDRES) > 0x20000000U) \
-                                                    && ((BYTE_ADDRES) < 0x22000000U)) ?  0x22000000U : ((((BYTE_ADDRES) > 0x40000000U) && ((BYTE_ADDRES) < 0x42000000U)) ?  0x42000000U : -1))))
+//#define BIT_BAND(BYTE_ADDRES, BIT)              (*(uint32_t *)(((uint32_t)((BYTE_ADDRES) - ((((BYTE_ADDRES) > 0x20000000U) && ((BYTE_ADDRES) < 0x22000000U)) ?
+//                                                    0x20000000U : ((((BYTE_ADDRES) > 0x40000000U) && ((BYTE_ADDRES) < 0x42000000U)) ?  0x40000000U : -1))))<<5U + (BIT<<2) + ((((BYTE_ADDRES) > 0x20000000U)
+//                                                    && ((BYTE_ADDRES) < 0x22000000U)) ?  0x22000000U : ((((BYTE_ADDRES) > 0x40000000U) && ((BYTE_ADDRES) < 0x42000000U)) ?  0x42000000U : -1))))
 
 #define TIM2_BASE                                (APB1_PERIPH_BASE + 0x00000000U)
 #define TIM3_BASE                                (APB1_PERIPH_BASE + 0x00000400U)
@@ -432,7 +420,8 @@ typedef struct{ //DBGMCU_TypeDef
 #define I2C1                                     ((I2C_TypeDef *)I2C1_BASE)
 #define I2C2                                     ((I2C_TypeDef *)I2C2_BASE)
 #define USB                                      ((USB_TypeDef *)USB_BASE)
-#define USB_SRAM                                 (*(USBSRAM_TyepDef *)USB_SRAM_BASE)
+#define USB_SRAM                                 ((USB_SRAM_TypeDef *)USB_SRAM_BASE)
+#define USB_BTABLE                               ((USB_BTABLE_TypeDef *)(USB_SRAM_BASE + (USB_BTABLE_ADDRESS<<1)))
 #define CAN1                                     ((CAN_TypeDef *)CAN1_BASE)
 #define BKP                                      ((BKP_TypeDef *)BKP_BASE)
 #define PWR                                      ((PWR_TypeDef *)PWR_BASE)
@@ -1979,10 +1968,10 @@ typedef struct{ //DBGMCU_TypeDef
 #define USB_EP_TYPE                              (0x3U << 9U)                  /*EndPoint TYPE*/
 #define USB_EP_TYPE_0                            (0x1U << 9U)
 #define USB_EP_TYPE_1                            (0x2U << 9U)
-#define USB_EP_TPYE_BULK                         0x00000000U                   /*EndPoint BULK*/
-#define USB_EP_TPYE_CONTROL                      0x00000200U                   /*EndPoint CONTROL*/
-#define USB_EP_TPYE_ISOCHRONOUS                  0x00000400U                   /*EndPoint ISOCHRONOUS*/
-#define USB_EP_TPYE_INTERRUPT                    0x00000600U                   /*EndPoint INTERRUPT*/
+#define USB_EP_TYPE_BULK                         0x00000000U                   /*EndPoint BULK*/
+#define USB_EP_TYPE_CONTROL                      0x00000200U                   /*EndPoint CONTROL*/
+#define USB_EP_TYPE_ISOCHRONOUS                  0x00000400U                   /*EndPoint ISOCHRONOUS*/
+#define USB_EP_TYPE_INTERRUPT                    0x00000600U                   /*EndPoint INTERRUPT*/
 #define USB_EP_SETUP                             (0x1U << 11U)                 /*EndPoint SETUP*/
 #define USB_EP_STAT_RX                           (0x3U << 12U)                 /*EndPoint RX STATus bit field*/
 #define USB_EP_STAT_RX_0                         (0x1U << 12U)
@@ -2053,14 +2042,7 @@ typedef struct{ //DBGMCU_TypeDef
 #define USB_DADDR_EF                             (0x1U << 7U)                  /*Enable Function*/
 
 #define USB_BTABLE_BTABLE                        (0x1FFFU << 3U)               /*Buffer Table*/
-
-#define USB_ADDR_TX_ADDR_TX                      (0x7FFFU << 1U)               /*Transmission Buffer Address*/
-
-#define USB_COUNT_TX_COUNT_TX                    (0x3FFU << 0U)                /*Transmission Byte Count*/
-#define USB_COUNT_TX_0_COUNT_TX_0                (0x3FFU << 0U)                /*Transmission Byte Count (low)*/
-#define USB_COUNT_TX_1_COUNT_TX_1                (0x3FFU << 16U)               /*Transmission Byte Count (high)*/
-
-#define USB_ADDR_RX_ADDR_RX                      (0x7FFFU << 1U)               /*Reception Buffer Address*/
+#define USB_BTABLE_ADDRESS                       (0X1C0U)                      /*Buffer Table address in buffer*/
 
 #define USB_COUNT_RX_COUNT_RX                   (0x3FFU << 0U)                /*Reception Byte Count*/
 #define USB_COUNT_RX_NUM_BLOCK                   (0x1FU << 10U)                /*NUM_BLOCK[4:0] bits (Number of blocks)*/
@@ -2070,22 +2052,6 @@ typedef struct{ //DBGMCU_TypeDef
 #define USB_COUNT_RX_NUM_BLOCK_3                 (0x08U << 10U)
 #define USB_COUNT_RX_NUM_BLOCK_4                 (0x10U << 10U)
 #define USB_COUNT_RX_BLSIZE                      (0x1U << 15U)                 /*BLock SIZE*/
-#define USB_COUNT_RX_0_COUNT0_RX                 (0x3FFU << 0U)                /*Reception Byte Count (low)*/
-#define USB_COUNT_RX_0_NUM_BLOCK_0               (0x1FU << 10U)                /*NUM_BLOCK[4:0] bits (Number of blocks) (low)*/
-#define USB_COUNT_RX_0_NUM_BLOCK_0_0             (0x01U << 10U)
-#define USB_COUNT_RX_0_NUM_BLOCK_0_1             (0x02U << 10U)
-#define USB_COUNT_RX_0_NUM_BLOCK_0_2             (0x04U << 10U)
-#define USB_COUNT_RX_0_NUM_BLOCK_0_3             (0x08U << 10U)
-#define USB_COUNT_RX_0_NUM_BLOCK_0_4             (0x10U << 10U)
-#define USB_COUNT_RX_0_BLSIZE_0                  (0x1U << 15U)                 /*BLock SIZE (low)*/
-#define USB_COUNT_RX_1_COUNT0_RX                 (0x3FFU << 16U)                /*Reception Byte Count (high)*/
-#define USB_COUNT_RX_1_NUM_BLOCK_0               (0x1FU << 26U)                /*NUM_BLOCK[4:0] bits (Number of blocks) (high)*/
-#define USB_COUNT_RX_1_NUM_BLOCK_0_0             (0x01U << 26U)
-#define USB_COUNT_RX_1_NUM_BLOCK_0_1             (0x02U << 26U)
-#define USB_COUNT_RX_1_NUM_BLOCK_0_2             (0x04U << 26U)
-#define USB_COUNT_RX_1_NUM_BLOCK_0_3             (0x08U << 26U)
-#define USB_COUNT_RX_1_NUM_BLOCK_0_4             (0x10U << 26U)
-#define USB_COUNT_RX_1_BLSIZE_0                  (0x1U << 31U)                 /*BLock SIZE (high)*/
 
 
 #define CAN_MCR_INRQ                             (0x1U << 0U)                  /*Initialization Request*/

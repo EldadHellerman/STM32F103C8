@@ -1,6 +1,6 @@
 LIB_PATH = E:/hobbys/Programing/ARM/STM32F103C8/lib
 ODIR = Build
-_OBJ = main.o printf.o sd.o usb.o usb_hid.o
+_OBJ = main.o usb.o printf.o
 
 
 CC = arm-none-eabi-gcc
@@ -18,7 +18,7 @@ DEPS := $(OBJ:.o=.d)
 #INC_DIRS := $(shell find $(SRC_DIRS) -type d) #find all directories in a source directory folder
 # INC_FLAGS := $(addprefix -I,$(INC_DIRS)) #and prepend a -I flag
 
-.PHONY: first all clean
+.PHONY: first all clean upload
 
 first: all
 	@echo done!
@@ -26,7 +26,7 @@ first: all
 
 -include $(DEPS)
 
-all: $(OBJ)
+all: $(OBJ) upload
 		@echo linking
 #		@arm-none-eabi-ld Debug\main.o Debug\c_runtime.o Debug\vector_table.o Debug\printf.o -T STM32F103C8_linker.ld -o Debug\final.o
 		@arm-none-eabi-gcc -nostartfiles $(OBJ) -o $(ODIR)/final.o $(LIB_PATH)/bin/c_runtime.o $(LIB_PATH)/bin/vector_table.o -T $(LIB_PATH)/STM32F103C8_linker.ld
